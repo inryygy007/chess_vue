@@ -55,7 +55,7 @@
 <script setup>
 import Piece from "../components/Piece.vue";
 import { defineProps, reactive } from "vue";
-import Game from "../game";
+import Game from "../game"; //这里引入了一局游戏的数据
 import Rule from "../game/rule";
 defineProps({});
 // 数据
@@ -79,8 +79,9 @@ const methods = {
     data.winCamp = 0;
     /* 游戏结束 */
     data.over = false;
-    // 初始化游戏
-    Game.initGame();
+    // 初始化游戏, 现在我们用服务器的数据来初始化他
+    // 结果就是它还是一样的, 只是数据我们用服务器的了
+    Game.initGame(globalThis.g_qipan_data);
     // 生成空的棋盘
     data.blankMap = Game.getBlankMap();
     /* 初始化黑色方阵营的棋子位置 */
@@ -170,7 +171,11 @@ const methods = {
     }
   },
 };
-methods.begin();
+setTimeout(()=>{
+  console.log(" methods.begin begin");
+  methods.begin();
+}, 6*1000);
+
 </script>
 <style scoped>
 .status {

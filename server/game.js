@@ -1,23 +1,15 @@
-import Piece from "./piecc";
+var Piece = require("./piecc");
+//这里就借用下前端的代码了
 class Game {
   constructor() {
     this.blankMap = [];
     this.redPieces = [];
     this.blackPieces = [];
   }
-  initGame(server_data) {
-    console.log("init");
-    // 如果服务器没传data 那就还按原来的方式初始化
-    if(server_data){ 
-      // 服务器的数据, 巧了, 结构基本是一样的
-      this.blankMap = server_data.blankMap;
-      this.redPieces = server_data.redPieces;
-      this.blackPieces = server_data.blackPieces;
-    }else{
-      this.blankMap = this.initBlankMap();
-      this.redPieces = this.initRedPieces();
-      this.blackPieces = this.initBlackPieces();
-    }
+  initGame() {
+    this.blankMap = this.initBlankMap();
+    this.redPieces = this.initRedPieces();
+    this.blackPieces = this.initBlackPieces();
   }
   getBlankMap() {
     return this.blankMap;
@@ -82,7 +74,15 @@ class Game {
       new Piece("k", [5, 10], -1),
     ];
   };
-}
-// 那么客户端用的这个数据就需要从服务器那里拿到先
 
-export default new Game();
+  //加一个转换成字符串的方法
+  toJSONString = function(){
+    let obj = {
+      blankMap: this.blankMap,
+      redPieces: this.redPieces,
+      blackPieces: this.blackPieces,
+    }
+    return JSON.stringify(obj);
+  }
+}
+exports = module.exports = Game;
