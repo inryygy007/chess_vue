@@ -1,26 +1,22 @@
 <template>
   <div
     class="piece"
-    :class="[color + '-' + item.name, handleHighLight(item)]"
+    :class="[color + '-' + item.name]"
     :style="handlePosition(item.position)"
     @click="clickPiece(item)"
-    v-for="item in blackPieces"
+    v-for="(item, index) in blackPieces"
     :key="color + item.name"
   ></div>
 </template>
 <script setup>
-import { defineProps, defineEmits, reactive } from "vue";
-const ctx = defineProps({
+import { defineProps, defineEmits } from "vue";
+defineProps({
   color: "",
-  blackPieces: [],
+  blackPieces: {default:[]},
 });
-const emit = defineEmits(["handleHighLight", "handlePosition", "clickPiece"]);
-const handleHighLight = (item) => {
-  console.log("handleHighLight", emit("handleHighLight", item));
-  return emit("handleHighLight", item);
-};
+const emit = defineEmits(["clickPiece"]);
+
 const handlePosition = (position) => {
-  // console.log('handlePosition',emit("handlePosition", position)); ;
   let pieceSize = 0.68;
   let x = position[0];
   let y = position[1];
@@ -28,7 +24,8 @@ const handlePosition = (position) => {
   y = (y - 1) * pieceSize - pieceSize / 2;
   return "left:" + x + "rem;bottom:" + y + "rem;";
 };
-const clickPiece = () => {
+
+const clickPiece = (item) => {
   emit("clickPiece", item);
 };
 </script>

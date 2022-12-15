@@ -20,7 +20,9 @@ class Game {
   getBlackPieces() {
     return this.blackPieces;
   }
-
+  getAllPieces() {
+    return [...this.redPieces, ...this.blackPieces];
+  }
   initBlankMap = function () {
     const map = [];
 
