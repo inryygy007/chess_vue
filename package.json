@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vite --open",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "serve": "vue-cli-service serve"
   },
   "dependencies": {
     "nodejs-websocket": "^1.7.2",

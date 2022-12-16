@@ -42,20 +42,24 @@ function zhunbei(roomId, accountId){
   //自动准备一下, 只准备一个
   for(let p in players){
     let player = players[p];
-    if(!player.zhunbeiFlag){
+    if(player.accountId === accountId){
       player.zhunbeiFlag = true;
-      break;
     }
   }
 
   //如果两人都准备好了, 开始发数据
   let two_ok = true;
+  let cnt = 0;
   for(let p in players){
+    cnt++;
     if(!players[p].zhunbeiFlag){
       two_ok = false;
       break;
     }
   }
+
+  // two_ok = two_ok && cnt === 2;
+  two_ok = two_ok && cnt === 1;
 
   if(two_ok){
     // 两人个准备好了才开始准备数据
@@ -100,6 +104,7 @@ function zouzi(roomId, camp, needMovePiece, targetPos){
 const Join_Rote = '/join/';
 const Zhunbei_Rote = '/zhunbei/';
 const Zouzi_Rote = '/zouzi/';
+const Login_Rote = '/login/';
 
 // Scream server example: "hi" -> "HI!!!"
 ws.createServer(function (conn) {
@@ -113,17 +118,11 @@ ws.createServer(function (conn) {
       let substr = data.substring('/join/'.length);
       let sub_arr = substr.split(":");
       let room_id = sub_arr[0];
-      let account_id = sub_arr[1];
-      if(account_id === 'auto'){
-        //id 自增
-        account_id = ++g_playerId;
-      }
+      conn.room_id = room_id;
+      let account_id = conn.playerId;
       join(room_id, account_id, conn);
     }else if(data.indexOf(Zhunbei_Rote) !== -1 ){
-      let substr = data.substring(Zhunbei_Rote.length);
-      let sub_arr = substr.split(":");
-      let room_id = sub_arr[0];
-      zhunbei(room_id);
+      zhunbei(conn.room_id, conn.playerId);
     }else if(data.indexOf(Zouzi_Rote) !== -1 ){
       //这里因为json 用了:, 所以不能用这个来划分 
       let substr = data.substring(Zouzi_Rote.length);
@@ -136,6 +135,13 @@ ws.createServer(function (conn) {
       // zhunbei(room_id);
       zouzi(room_id, parseInt(camp), needMovePiece, targetPiece);
       let a = 100;
+    }else if(data.indexOf(Login_Rote) !== -1 ){
+      let substr = data.substring(Zouzi_Rote.length);
+      let sub_arr = substr.split("@");
+      let id = sub_arr[0];
+      // 必须要先login
+      conn.playerId = id;
+      conn.sendText('c/loginok');
     }
   });
   // 关闭服务器的回调方法

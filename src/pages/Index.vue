@@ -4,6 +4,7 @@
     <div class="status" :class="data.nextCamp > 0 ? 'red' : ''">
       {{ data.nextCamp > 0 ? "红棋" : "黑棋" }}
     </div>
+    <button v-show="data.toPrepare" @click="methods.ready">准备</button>
     <!-- 棋盘 -->
     <div class="board">
       <div class="board-wrap">
@@ -60,6 +61,7 @@ import Rule from "../game/rule";
 defineProps({});
 // 数据
 const data = reactive({
+  toPrepare: true,
   nextCamp: -1,
   winCamp: 0,
   over: false,
@@ -71,6 +73,12 @@ const data = reactive({
 });
 // 方法
 const methods = {
+  ready() {
+    console.log('进来了');
+    data.toPrepare = false;
+    // /zhunbei/
+    globalThis.g_ws.send(`/zhunbei/`)
+  },
   // 开始
   begin() {
     // 那个阵营先走
@@ -86,12 +94,13 @@ const methods = {
     data.blankMap = Game.getBlankMap();
     /* 初始化黑色方阵营的棋子位置 */
     data.blackPieces = Game.getBlackPieces();
+    data.blackPieces = data.blackPieces.reverse();
     /* 初始化红色方阵营的棋子位置 */
     data.redPieces = Game.getRedPieces();
     console.log("zouzi_func ,,");
-    globalThis.zouzi_func = function(e){
-      if(e.data.indexOf('c/zouzi/') !== -1){
-        let substr = e.data.substring('c/zouzi/'.length);
+    globalThis.zouzi_func = function (e) {
+      if (e.data.indexOf("c/zouzi/") !== -1) {
+        let substr = e.data.substring("c/zouzi/".length);
         let sub_arr = substr.split("@");
         let needMovePiece = JSON.parse(sub_arr[0]);
         let targetPiece = JSON.parse(sub_arr[1]);
@@ -102,9 +111,9 @@ const methods = {
         // 只是它必须得在服务器发送数据过来的回调才行
         // 因为方法基本是一样的, 所以走子基本上没什么问题
         // 因为客户端是两个, 所以你看到另一个客户端也走子了
-        methods._moveToAnim(needMovePiece,targetPiece);
+        methods._moveToAnim(needMovePiece, targetPiece);
       }
-    }
+    };
   },
   /* 处理高亮 */
   handleHighLight(piece) {
@@ -153,11 +162,11 @@ const methods = {
       data.highLightPoint = Rule.getMoveLine(data.needMovePiece);
     }
   },
-  _findPieceByPos(camp, position){
+  _findPieceByPos(camp, position) {
     let isRed = camp > 0;
     let findArr = isRed ? data.redPieces : data.blackPieces;
-    for(let x of findArr){
-      if(x.position[0] === position[0] && x.position[1] === position[1]){
+    for (let x of findArr) {
+      if (x.position[0] === position[0] && x.position[1] === position[1]) {
         return x;
       }
     }
@@ -174,13 +183,13 @@ const methods = {
   _moveToAnim(n2, targetPiece) {
     //当收到服务器
     let needMovePiece = methods._findPieceByPos(data.nextCamp, n2.position);
-    if(needMovePiece){
+    if (needMovePiece) {
       // data.needMovePiece = needMovePiece;
       methods.clickPiece(needMovePiece);
     }
     // Game.findByPosition(n2.position);
     console.log("is same piece", data.needMovePiece === needMovePiece);
-    console.log("needMovePiece is",JSON.stringify(needMovePiece));
+    console.log("needMovePiece is", JSON.stringify(needMovePiece));
     if (Rule.canMove(needMovePiece, targetPiece, data.highLightPoint)) {
       console.log("can move 1");
       if (targetPiece.camp && targetPiece.camp !== needMovePiece.camp) {
@@ -193,7 +202,7 @@ const methods = {
       // 清除状态
       data.needMovePiece = null;
       data.highLightPoint = [];
-    }else{
+    } else {
       console.log("can not move");
     }
   },
@@ -221,11 +230,11 @@ const methods = {
     }
   },
 };
-setTimeout(()=>{
+
+globalThis.beginGame = () => {
   console.log(" methods.begin begin");
   methods.begin();
-}, 10*1000);
-
+};
 </script>
 <style scoped>
 .status {
