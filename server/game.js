@@ -55,6 +55,7 @@ class Game {
     ];
   };
   initBlackPieces = function () {
+    //从这里可以看到位置是一个数组[1, 10] 代表1行10列之类的
     return [
       new Piece("j1", [1, 10], -1),
       new Piece("j2", [9, 10], -1),
@@ -83,6 +84,16 @@ class Game {
       blackPieces: this.blackPieces,
     }
     return JSON.stringify(obj);
+  }
+
+  //添加一个根据阵容和名字找子的方法
+  findByCampAndId(isRed, name){
+    let findArr = isRed ? this.redPieces : this.blackPieces;
+    for(let x of findArr){
+      if(x.name === name){
+        return x;
+      }
+    }
   }
 }
 exports = module.exports = Game;

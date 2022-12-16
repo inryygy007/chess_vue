@@ -4,6 +4,8 @@ const contactSocket = () => {
   if (window.WebSocket) {
     console.log('进来了');
     const ws = new WebSocket("ws:127.0.0.1:8181");
+    //简单起见 这个ws 存成全局
+    globalThis.g_ws = ws;
     //路由定义
     const Router_QiPan = 'c/qipan/';
     ws.onopen=function(){
@@ -32,6 +34,11 @@ const contactSocket = () => {
        
         globalThis.g_qipan_data = qipan_data;
         console.log("set g_qipan_data", globalThis.g_qipan_data);
+      }else if(e.data.indexOf('c/zouzi/') !== -1){
+        let func = globalThis.zouzi_func;
+        if(func){
+          func(e);
+        }
       }
 
     }

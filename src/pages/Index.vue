@@ -88,6 +88,23 @@ const methods = {
     data.blackPieces = Game.getBlackPieces();
     /* 初始化红色方阵营的棋子位置 */
     data.redPieces = Game.getRedPieces();
+    console.log("zouzi_func ,,");
+    globalThis.zouzi_func = function(e){
+      if(e.data.indexOf('c/zouzi/') !== -1){
+        let substr = e.data.substring('c/zouzi/'.length);
+        let sub_arr = substr.split("@");
+        let needMovePiece = JSON.parse(sub_arr[0]);
+        let targetPiece = JSON.parse(sub_arr[1]);
+        let camp = sub_arr[2];
+        data.nextCamp = parseInt(camp);
+        // 当收到走子的方法再调用这个 修改名字后的函数
+        // 其实这个改名后的函数做的事情跟之前是一样的
+        // 只是它必须得在服务器发送数据过来的回调才行
+        // 因为方法基本是一样的, 所以走子基本上没什么问题
+        // 因为客户端是两个, 所以你看到另一个客户端也走子了
+        methods._moveToAnim(needMovePiece,targetPiece);
+      }
+    }
   },
   /* 处理高亮 */
   handleHighLight(piece) {
@@ -127,24 +144,57 @@ const methods = {
   clickPiece(piece) {
     if (data.needMovePiece && data.needMovePiece.camp !== piece.camp) {
       methods.moveToAnim(data.needMovePiece, piece);
-      data.needMovePiece = null;
-      data.highLightPoint = [];
+      console.log("che here11,,");
+      // data.needMovePiece = null;
+      // data.highLightPoint = [];
     } else if (piece.camp && piece.camp === data.nextCamp) {
       data.needMovePiece = piece;
+      console.log("check here,,,", piece);
       data.highLightPoint = Rule.getMoveLine(data.needMovePiece);
-      console.log(data.highLightPoint);
     }
   },
+  _findPieceByPos(camp, position){
+    let isRed = camp > 0;
+    let findArr = isRed ? data.redPieces : data.blackPieces;
+    for(let x of findArr){
+      if(x.position[0] === position[0] && x.position[1] === position[1]){
+        return x;
+      }
+    }
+  },
+  //主要是这个方法, 原来的话是直接调用就会移动棋子
+  //那么现在处理的是调用这个方法的时候给服务器传数据
   moveToAnim(needMovePiece, targetPiece) {
+    let js_str = JSON.stringify(needMovePiece);
+    let tar_str = JSON.stringify(targetPiece);
+    globalThis.g_ws.send(`/zouzi/1@${data.nextCamp}@${js_str}@${tar_str}`);
+  },
+  //换句话说, 把这个函数的名字改回来, 就可以跟之前一样
+  //因为没有经过服务器转发数据了
+  _moveToAnim(n2, targetPiece) {
+    //当收到服务器
+    let needMovePiece = methods._findPieceByPos(data.nextCamp, n2.position);
+    if(needMovePiece){
+      // data.needMovePiece = needMovePiece;
+      methods.clickPiece(needMovePiece);
+    }
+    // Game.findByPosition(n2.position);
+    console.log("is same piece", data.needMovePiece === needMovePiece);
+    console.log("needMovePiece is",JSON.stringify(needMovePiece));
     if (Rule.canMove(needMovePiece, targetPiece, data.highLightPoint)) {
+      console.log("can move 1");
       if (targetPiece.camp && targetPiece.camp !== needMovePiece.camp) {
         methods.removePiece(targetPiece);
       }
+      console.log("can move 2");
       needMovePiece.moveTo(targetPiece.position);
+      console.log("can move 3");
       data.nextCamp = -data.nextCamp;
       // 清除状态
       data.needMovePiece = null;
       data.highLightPoint = [];
+    }else{
+      console.log("can not move");
     }
   },
   removePiece(piece) {
@@ -174,7 +224,7 @@ const methods = {
 setTimeout(()=>{
   console.log(" methods.begin begin");
   methods.begin();
-}, 6*1000);
+}, 10*1000);
 
 </script>
 <style scoped>

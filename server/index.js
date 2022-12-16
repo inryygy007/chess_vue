@@ -82,8 +82,24 @@ function zhunbei(roomId, accountId){
   
 }
 
-//接下来把棋局的数据发给两个客户端就行了
+function zouzi(roomId, camp, needMovePiece, targetPos){
+  let room = rooms[roomId];
+  if(!room){
+    return;
+  }
+  // 服务器也不干别的, 把收到的数据 发给房间里的两人个玩家
+  let players = room['players'];
+  for(let p in players){
+    let player = players[p];
+    let conn = player.conn;
+    conn.sendText(`c/zouzi/${needMovePiece}@${targetPos}@${camp}`);
+  }
+}
 
+//接下来把棋局的数据发给两个客户端就行了
+const Join_Rote = '/join/';
+const Zhunbei_Rote = '/zhunbei/';
+const Zouzi_Rote = '/zouzi/';
 
 // Scream server example: "hi" -> "HI!!!"
 ws.createServer(function (conn) {
@@ -103,11 +119,23 @@ ws.createServer(function (conn) {
         account_id = ++g_playerId;
       }
       join(room_id, account_id, conn);
-    }else if(data.indexOf('/zhunbei/') !== -1 ){
-      let substr = data.substring('/zhunbei/'.length);
+    }else if(data.indexOf(Zhunbei_Rote) !== -1 ){
+      let substr = data.substring(Zhunbei_Rote.length);
       let sub_arr = substr.split(":");
       let room_id = sub_arr[0];
       zhunbei(room_id);
+    }else if(data.indexOf(Zouzi_Rote) !== -1 ){
+      //这里因为json 用了:, 所以不能用这个来划分 
+      let substr = data.substring(Zouzi_Rote.length);
+      let sub_arr = substr.split("@");
+      let room_id = sub_arr[0];
+      let camp = sub_arr[1];
+      let needMovePiece = sub_arr[2];
+      let targetPiece = sub_arr[3];
+
+      // zhunbei(room_id);
+      zouzi(room_id, parseInt(camp), needMovePiece, targetPiece);
+      let a = 100;
     }
   });
   // 关闭服务器的回调方法

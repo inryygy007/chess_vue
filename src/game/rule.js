@@ -49,7 +49,7 @@ const getMoveLine = function (piece) {
 }
 
 const canMove = function (piece, targetPiece, canMovePoint) {
-  console.log(piece, targetPiece, canMovePoint)
+  console.log("canMove here",piece, targetPiece, canMovePoint)
   if (!canMovePoint || canMovePoint.length < 1) {
     // 如果还没有可移动的列表，则return
     return false
