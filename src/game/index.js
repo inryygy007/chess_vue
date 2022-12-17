@@ -15,7 +15,6 @@ class Game {
   }
 
   initGame(server_data) {
-    console.log("init", server_data);
     if(this.blankMap.length > 0){
       return;
     }
@@ -55,43 +54,45 @@ class Game {
     return map;
   };
   initRedPieces = function () {
+    const MaxRow = 11;
     return [
-      new Piece("j1", [1, 1], 1), // 车
-      new Piece("j2", [9, 1], 1), // 车
-      new Piece("p1", [2, 3], 1), // 炮
-      new Piece("p2", [8, 3], 1), // 炮
-      new Piece("m1", [2, 1], 1), // 马
-      new Piece("m2", [8, 1], 1), // 马
-      new Piece("x1", [3, 1], 1), // 相
-      new Piece("x2", [7, 1], 1), // 相
-      new Piece("s1", [4, 1], 1), // 士
-      new Piece("s2", [6, 1], 1), // 士
-      new Piece("z1", [1, 4], 1), // 兵
-      new Piece("z2", [3, 4], 1), // 兵
-      new Piece("z3", [5, 4], 1), // 兵
-      new Piece("z4", [7, 4], 1), // 兵
-      new Piece("z5", [9, 4], 1), // 兵
-      new Piece("k", [5, 1], 1), // 帅
+      new Piece("j1", [1, MaxRow - 1], 1), // 车
+      new Piece("j2", [9, MaxRow - 1], 1), // 车
+      new Piece("p1", [2, MaxRow - 3], 1), // 炮
+      new Piece("p2", [8, MaxRow - 3], 1), // 炮
+      new Piece("m1", [2, MaxRow - 1], 1), // 马
+      new Piece("m2", [8, MaxRow - 1], 1), // 马
+      new Piece("x1", [3, MaxRow - 1], 1), // 相
+      new Piece("x2", [7, MaxRow - 1], 1), // 相
+      new Piece("s1", [4, MaxRow - 1], 1), // 士
+      new Piece("s2", [6, MaxRow - 1], 1), // 士
+      new Piece("z1", [1, MaxRow - 4], 1), // 兵
+      new Piece("z2", [3, MaxRow - 4], 1), // 兵
+      new Piece("z3", [5, MaxRow - 4], 1), // 兵
+      new Piece("z4", [7, MaxRow - 4], 1), // 兵
+      new Piece("z5", [9, MaxRow - 4], 1), // 兵
+      new Piece("k",  [5, MaxRow -1], 1), // 帅
     ];
   };
   initBlackPieces = function () {
+    const MaxRow = 11;
     return [
-      new Piece("j1", [1, 10], -1),
-      new Piece("j2", [9, 10], -1),
-      new Piece("p1", [2, 8], -1),
-      new Piece("p2", [8, 8], -1),
-      new Piece("m1", [2, 10], -1),
-      new Piece("m2", [8, 10], -1),
-      new Piece("x1", [3, 10], -1),
-      new Piece("x2", [7, 10], -1),
-      new Piece("s1", [4, 10], -1),
-      new Piece("s2", [6, 10], -1),
-      new Piece("z1", [1, 7], -1),
-      new Piece("z2", [3, 7], -1),
-      new Piece("z3", [5, 7], -1),
-      new Piece("z4", [7, 7], -1),
-      new Piece("z5", [9, 7], -1),
-      new Piece("k", [5, 10], -1),
+      new Piece("j1", [1, MaxRow - 10], -1),
+      new Piece("j2", [9, MaxRow - 10], -1),
+      new Piece("p1", [2, MaxRow - 8], -1),
+      new Piece("p2", [8, MaxRow - 8], -1),
+      new Piece("m1", [2, MaxRow - 10], -1),
+      new Piece("m2", [8, MaxRow - 10], -1),
+      new Piece("x1", [3, MaxRow - 10], -1),
+      new Piece("x2", [7, MaxRow - 10], -1),
+      new Piece("s1", [4, MaxRow - 10], -1),
+      new Piece("s2", [6, MaxRow - 10], -1),
+      new Piece("z1", [1, MaxRow - 7], -1),
+      new Piece("z2", [3, MaxRow - 7], -1),
+      new Piece("z3", [5, MaxRow - 7], -1),
+      new Piece("z4", [7, MaxRow - 7], -1),
+      new Piece("z5", [9, MaxRow - 7], -1),
+      new Piece("k",  [5, MaxRow - 10], -1),
     ];
   };
 

@@ -30,7 +30,6 @@ const contactSocket = () => {
         let data_str = e.data.substring(Router_QiPan.length);
         let data_arr = data_str.split('@');
         data_str = data_arr[0];
-        console.log("camp is ", data_arr[1]);
         let camp = parseInt(data_arr[1]);
         // 转换成JSON 对象
         let qipan_data = JSON.parse(data_str);
@@ -39,7 +38,6 @@ const contactSocket = () => {
 
         globalThis.g_qipan_data = qipan_data;
         globalThis.g_camp = camp;
-        console.log("set g_camp", globalThis.g_camp);
         if(globalThis.beginGame){
           globalThis.beginGame();
         }
@@ -62,7 +60,6 @@ const contactSocket = () => {
 };
 const login = () => {
   // contactSocket()
-  console.log("account.value",account.value);
   globalThis.g_ws.send(`/login/${account.value}`);
   // account.value('');//这一行报错了
   router.push('theHall')

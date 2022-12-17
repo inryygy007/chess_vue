@@ -17,15 +17,16 @@
           :key="'black' + index"
         ></div>
         <Piece
-          color="black"
-          :blackPieces="data.blackPieces"
-          @clickPiece="methods.clickPiece"
-        />
-        <Piece
           color="red"
           :blackPieces="data.redPieces"
           @clickPiece="methods.clickPiece"
         />
+        <Piece
+          color="black"
+          :blackPieces="data.blackPieces"
+          @clickPiece="methods.clickPiece"
+        />
+       
         <!-- <div
           class="piece"
           :class="['black-' + item.name, methods.handleHighLight(item)]"
@@ -74,7 +75,6 @@ const data = reactive({
 // 方法
 const methods = {
   ready() {
-    console.log('进来了');
     data.toPrepare = false;
     // /zhunbei/
     globalThis.g_ws.send(`/zhunbei/`)
@@ -98,7 +98,6 @@ const methods = {
     data.blackPieces = data.blackPieces.reverse();
     /* 初始化红色方阵营的棋子位置 */
     data.redPieces = Game.getRedPieces();
-    console.log("zouzi_func ,,");
     globalThis.zouzi_func = function (e) {
       if (e.data.indexOf("c/zouzi/") !== -1) {
         let substr = e.data.substring("c/zouzi/".length);
@@ -118,6 +117,9 @@ const methods = {
   },
   /* 处理高亮 */
   handleHighLight(piece) {
+    if(data.nextCamp === 0){
+      return;
+    }
     const positionStr = piece.position.toString();
     for (const point of data.highLightPoint) {
       if (point.toString() === positionStr) {
@@ -152,15 +154,12 @@ const methods = {
   },
   /* 点击事件 */
   clickPiece(piece) {
-    console.log("clickPiece", piece.camp, data.needMovePiece, data.nextCamp);
     if (data.needMovePiece && data.needMovePiece.camp !== piece.camp) {
       methods.moveToAnim(data.needMovePiece, piece);
-      console.log("che here11,,");
       // data.needMovePiece = null;
       // data.highLightPoint = [];
     } else if (piece.camp && piece.camp === data.nextCamp) {
       data.needMovePiece = piece;
-      console.log("check here,,,", piece);
       data.highLightPoint = Rule.getMoveLine(data.needMovePiece);
     }else{
       console.log("走这里");
@@ -180,7 +179,7 @@ const methods = {
   moveToAnim(needMovePiece, targetPiece) {
     let js_str = JSON.stringify(needMovePiece);
     let tar_str = JSON.stringify(targetPiece);
-    globalThis.g_ws.send(`/zouzi/1@${data.nextCamp}@${js_str}@${tar_str}`);
+    globalThis.g_ws.send(`/zouzi/${data.nextCamp}@${js_str}@${tar_str}`);
   },
   //换句话说, 把这个函数的名字改回来, 就可以跟之前一样
   //因为没有经过服务器转发数据了
@@ -192,16 +191,11 @@ const methods = {
       methods.clickPiece(needMovePiece);
     }
     // Game.findByPosition(n2.position);
-    console.log("is same piece", data.needMovePiece === needMovePiece);
-    console.log("needMovePiece is", JSON.stringify(needMovePiece));
     if (Rule.canMove(needMovePiece, targetPiece, data.highLightPoint)) {
-      console.log("can move 1");
       if (targetPiece.camp && targetPiece.camp !== needMovePiece.camp) {
         methods.removePiece(targetPiece);
       }
-      console.log("can move 2");
       needMovePiece.moveTo(targetPiece.position);
-      console.log("can move 3");
       // -1, 1 , 0：走完的一个状态
       data.nextCamp = -data.nextCamp;
       if(data.nextCamp === globalThis.g_camp){
@@ -242,7 +236,6 @@ const methods = {
 };
 
 globalThis.beginGame = () => {
-  console.log(" methods.begin begin");
   methods.begin();
 };
 </script>

@@ -69,41 +69,81 @@ const getZMoveLine = function (piece) {
   const x = position[0]
   const y = position[1]
   const line = []
-  if (piece.camp === 1) { // 红方，棋盘在下方
-    if (y <= 5) {
-      line.push([x, y + 1]) // 只能前进一步
-    } else {
-      if (y !== 10) {
-        // 可以前进一步
-        line.push([x, y + 1])
+  let isRed = globalThis.g_camp === 1;
+  if(isRed){
+    if (piece.camp === 1) { // 红方，棋盘在下方
+      if (y <= 5) {
+        line.push([x, y + 1]) // 只能前进一步
+      } else {
+        if (y !== 10) {
+          // 可以前进一步
+          line.push([x, y + 1])
+        }
+        if (x !== 1) {
+          // 可以左移一步
+          line.push([x - 1, y])
+        }
+        if (x !== 9) {
+          // 可以右移一步
+          line.push([x + 1, y])
+        }
       }
-      if (x !== 1) {
-        // 可以左移一步
-        line.push([x - 1, y])
-      }
-      if (x !== 9) {
-        // 可以右移一步
-        line.push([x + 1, y])
+    } else { // 黑方，棋盘在上方
+      if (y > 5) {
+        line.push([x, y - 1]) // 只能前进一步
+      } else {
+        if (y !== 1) {
+          // 可以前进一步
+          line.push([x, y - 1])
+        }
+        if (x !== 1) {
+          // 可以左移一步
+          line.push([x - 1, y])
+        }
+        if (x !== 9) {
+          // 可以右移一步
+          line.push([x + 1, y])
+        }
       }
     }
-  } else { // 黑方，棋盘在上方
-    if (y > 5) {
-      line.push([x, y - 1]) // 只能前进一步
-    } else {
-      if (y !== 1) {
-        // 可以前进一步
-        line.push([x, y - 1])
+  }else{
+    if (piece.camp === -1) { // 黑方，棋盘在下方
+      if (y <= 5) {
+        line.push([x, y + 1]) // 只能前进一步
+      } else {
+        if (y !== 10) {
+          // 可以前进一步
+          line.push([x, y + 1])
+        }
+        if (x !== 1) {
+          // 可以左移一步
+          line.push([x - 1, y])
+        }
+        if (x !== 9) {
+          // 可以右移一步
+          line.push([x + 1, y])
+        }
       }
-      if (x !== 1) {
-        // 可以左移一步
-        line.push([x - 1, y])
-      }
-      if (x !== 9) {
-        // 可以右移一步
-        line.push([x + 1, y])
+    } else { // 红方，棋盘在上方
+      if (y > 5) {
+        line.push([x, y - 1]) // 只能前进一步
+      } else {
+        if (y !== 1) {
+          // 可以前进一步
+          line.push([x, y - 1])
+        }
+        if (x !== 1) {
+          // 可以左移一步
+          line.push([x - 1, y])
+        }
+        if (x !== 9) {
+          // 可以右移一步
+          line.push([x + 1, y])
+        }
       }
     }
   }
+  
   return line
 }
 

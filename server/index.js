@@ -91,7 +91,7 @@ function zhunbei(roomId, accountId){
       // 同样, 我们做一个简单的客户端的路由
       // c 代表发给client 也就是客户端
       let camp = player.isRed ? 1 : -1;
-      conn.sendText('c/qipan/' + rooms[roomId]["game"].toJSONString() +`@${camp}`);
+      conn.sendText('c/qipan/' + rooms[roomId]["game"].toJSONString(player.isRed) +`@${camp}`);
     }
   }
   
@@ -102,12 +102,44 @@ function zouzi(roomId, camp, needMovePiece, targetPos){
   if(!room){
     return;
   }
+  let game = room["game"];
+  let redCamp = camp === 1;
+
+  let copy_needMovePiece = JSON.parse(needMovePiece);
+  let copy_targetPos = JSON.parse(targetPos);
+  copy_needMovePiece.position = game.fanxiang(copy_needMovePiece.position);
+  copy_targetPos.position = game.fanxiang(copy_targetPos.position);
+  
+  copy_needMovePiece = JSON.stringify(copy_needMovePiece);
+  copy_targetPos = JSON.stringify(copy_targetPos);
+  
+  let red_needMovePiece = null;
+  let red_targetPos = null;
+  let black_needMovePiece = null;
+  let black_targetPos = null;
+  if(redCamp){
+    red_needMovePiece = needMovePiece;
+    red_targetPos = targetPos;
+    
+    black_needMovePiece = copy_needMovePiece;
+    black_targetPos = copy_targetPos;
+  }else{
+    red_needMovePiece = copy_needMovePiece;
+    red_targetPos = copy_targetPos;
+
+    black_needMovePiece = needMovePiece;
+    black_targetPos = targetPos;
+  }
+
   // 服务器也不干别的, 把收到的数据 发给房间里的两人个玩家
   let players = room['players'];
   for(let p in players){
     let player = players[p];
     let conn = player.conn;
-    conn.sendText(`c/zouzi/${needMovePiece}@${targetPos}@${camp}`);
+    let isRed = player.isRed;
+    let n = isRed? red_needMovePiece : black_needMovePiece;
+    let t = isRed? red_targetPos : black_targetPos;
+    conn.sendText(`c/zouzi/${n}@${t}@${camp}`);
   }
 }
 
@@ -138,10 +170,10 @@ ws.createServer(function (conn) {
       //这里因为json 用了:, 所以不能用这个来划分 
       let substr = data.substring(Zouzi_Rote.length);
       let sub_arr = substr.split("@");
-      let room_id = sub_arr[0];
-      let camp = sub_arr[1];
-      let needMovePiece = sub_arr[2];
-      let targetPiece = sub_arr[3];
+      let room_id = conn.room_id;
+      let camp = sub_arr[0];
+      let needMovePiece = sub_arr[1];
+      let targetPiece = sub_arr[2];
 
       // zhunbei(room_id);
       zouzi(room_id, parseInt(camp), needMovePiece, targetPiece);
@@ -158,6 +190,8 @@ ws.createServer(function (conn) {
   // 关闭服务器的回调方法
   conn.on("close", function (e) {
     console.log(e, "服务端链接关闭");
+    let roomId = conn.room_id;
+    delete rooms[roomId];
   });
   conn.on("error", function (e) {
     console.log("服务端异常");
