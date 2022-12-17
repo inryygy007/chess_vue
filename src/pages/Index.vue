@@ -1,8 +1,8 @@
 <template>
   <div>
     <!-- 显示走棋的一方 -->
-    <div class="status" :class="data.nextCamp > 0 ? 'red' : ''">
-      {{ data.nextCamp > 0 ? "红棋" : "黑棋" }}
+    <div class="status" :class="methods.getShowCamp() > 0 ? 'red' : ''">
+      {{ methods.getShowCamp() > 0 ? "红棋" : "黑棋" }}
     </div>
     <button v-show="data.toPrepare" @click="methods.ready">准备</button>
     <!-- 棋盘 -->
@@ -74,6 +74,13 @@ const data = reactive({
 });
 // 方法
 const methods = {
+  getShowCamp(){
+    if(data.nextCamp !== 0){
+      return data.nextCamp;
+    }else{
+      return -globalThis.g_camp;
+    }
+  },
   ready() {
     data.toPrepare = false;
     // /zhunbei/
