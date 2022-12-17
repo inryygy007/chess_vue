@@ -28,13 +28,18 @@ const contactSocket = () => {
       if (e.data.indexOf(Router_QiPan) !== -1) {
         // 发送过来的是棋盘的数据,
         let data_str = e.data.substring(Router_QiPan.length);
+        let data_arr = data_str.split('@');
+        data_str = data_arr[0];
+        console.log("camp is ", data_arr[1]);
+        let camp = parseInt(data_arr[1]);
         // 转换成JSON 对象
         let qipan_data = JSON.parse(data_str);
         // 那么这个 qipan_data 怎么发个其它界面呢?
         // 这里为了简单我就把它存成一个全局的了
 
         globalThis.g_qipan_data = qipan_data;
-        console.log("set g_qipan_data", globalThis.g_qipan_data);
+        globalThis.g_camp = camp;
+        console.log("set g_camp", globalThis.g_camp);
         if(globalThis.beginGame){
           globalThis.beginGame();
         }

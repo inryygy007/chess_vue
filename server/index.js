@@ -38,12 +38,22 @@ function zhunbei(roomId, accountId){
   //发送数据
   let t_room = rooms[roomId];
   let players = t_room['players'];
+
+  let readyBefore = false;
+  for(let p in players){
+    let player = players[p];
+    if(player.zhunbeiFlag && player.accountId !== accountId){
+      readyBefore = true;
+      break;
+    }
+  }
   //
   //自动准备一下, 只准备一个
   for(let p in players){
     let player = players[p];
     if(player.accountId === accountId){
       player.zhunbeiFlag = true;
+      player.isRed = !readyBefore;
     }
   }
 
@@ -59,7 +69,7 @@ function zhunbei(roomId, accountId){
   }
 
   // two_ok = two_ok && cnt === 2;
-  two_ok = two_ok && cnt === 1;
+  two_ok = two_ok && cnt === 2;
 
   if(two_ok){
     // 两人个准备好了才开始准备数据
@@ -80,7 +90,8 @@ function zhunbei(roomId, accountId){
       //那么也就是这个库要发字符串, 不代表其它库要发字符串
       // 同样, 我们做一个简单的客户端的路由
       // c 代表发给client 也就是客户端
-      conn.sendText('c/qipan/' + rooms[roomId]["game"].toJSONString());
+      let camp = player.isRed ? 1 : -1;
+      conn.sendText('c/qipan/' + rooms[roomId]["game"].toJSONString() +`@${camp}`);
     }
   }
   

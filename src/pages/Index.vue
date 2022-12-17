@@ -82,7 +82,8 @@ const methods = {
   // 开始
   begin() {
     // 那个阵营先走
-    data.nextCamp = data.winCamp ? -data.winCamp : 1;
+    data.nextCamp = globalThis.g_camp === 1 ? 1 : 0;
+    // data.winCamp ? -data.winCamp : 1;
     // 胜利方
     data.winCamp = 0;
     /* 游戏结束 */
@@ -151,6 +152,7 @@ const methods = {
   },
   /* 点击事件 */
   clickPiece(piece) {
+    console.log("clickPiece", piece.camp, data.needMovePiece, data.nextCamp);
     if (data.needMovePiece && data.needMovePiece.camp !== piece.camp) {
       methods.moveToAnim(data.needMovePiece, piece);
       console.log("che here11,,");
@@ -160,6 +162,8 @@ const methods = {
       data.needMovePiece = piece;
       console.log("check here,,,", piece);
       data.highLightPoint = Rule.getMoveLine(data.needMovePiece);
+    }else{
+      console.log("走这里");
     }
   },
   _findPieceByPos(camp, position) {
@@ -198,7 +202,13 @@ const methods = {
       console.log("can move 2");
       needMovePiece.moveTo(targetPiece.position);
       console.log("can move 3");
+      // -1, 1 , 0：走完的一个状态
       data.nextCamp = -data.nextCamp;
+      if(data.nextCamp === globalThis.g_camp){
+
+      }else{
+        data.nextCamp = 0;
+      }
       // 清除状态
       data.needMovePiece = null;
       data.highLightPoint = [];
