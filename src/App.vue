@@ -15,7 +15,15 @@ document.body.onresize = resize;
 </script>
 
 <template>
-  <RouterView />
+  <n-loading-bar-provider>
+    <n-message-provider>
+      <n-notification-provider>
+        <n-dialog-provider>
+          <RouterView />
+        </n-dialog-provider>
+      </n-notification-provider>
+    </n-message-provider>
+  </n-loading-bar-provider>
 </template>
 
 <style scoped></style>
