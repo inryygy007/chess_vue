@@ -1,93 +1,37 @@
 <template>
+  <a-button type="primary">Primary Button</a-button>
+  <a-button>Default Button</a-button>
+  <a-button type="dashed">Dashed Button</a-button>
+  <a-button type="text">Text Button</a-button>
+  <a-button type="link">Link Button</a-button>
+  <a-button type="primary" @click="info">Display normal message</a-button>
+  <a-button type="primary" @click="openNotification">Open the notification box</a-button>
+  <step-backward-outlined />
   <!-- <div>
     <input type="text" v-model="account" />
     <button @click="login">登录</button>
   </div> -->
-  <div style="width: 800px">
-    <n-form
-      ref="formRef"
-      label-align="left"
-      label-placement="left"
-      :label-width="80"
-      :model="formValue"
-      :rules="rules"
-    >
-      <n-form-item label="用户名" path="user.name">
-        <n-input v-model:value="formValue.user.name" placeholder="请输入账号" />
-      </n-form-item>
-      <n-form-item label="密码" path="user.password">
-        <n-input v-model:value="formValue.user.password" placeholder="请输入密码" />
-      </n-form-item>
-      <n-form-item>
-        <n-button @click="handleValidateClick"> 登录 </n-button>
-      </n-form-item>
-    </n-form>
-  </div>
 </template>
 <script setup>
-import { defineProps, ref, reactive } from "vue";
+import {StepBackwardOutlined} from '@ant-design/icons-vue'
+import { defineProps, ref, reactive, getCurrentInstance } from "vue";
 import { useRouter } from "vue-router";
-import { useMessage } from "naive-ui";
-console.log(import.meta.env.VITE_BASIC_URL);
+// console.log(import.meta.env.VITE_BASIC_URL);
 const router = useRouter();
 // let account = ref("");
-const formRef = ref(null);
-const message = useMessage();
-const formValue = ref({
-  user: {
-    name: "",
-    password: "",
-  },
-});
-
-const rules = {
-  user: {
-    name: {
-      required: true,
-      trigger: "blur",
-      validator: (rule, value) => {
-        return new Promise((resolve, reject) => {
-          setTimeout(() => {
-            if (value !== "userName") {
-              reject(Error("用户名不存在"));
-            } else {
-              resolve();
-            }
-          }, 3e3);
-        });
-      },
-    },
-    password: {
-      required: true,
-      trigger: "blur",
-      validator: (rule, value) => {
-        return new Promise((resolve, reject) => {
-          setTimeout(() => {
-            if (value !== "userPassword") {
-              reject(Error("密码不正确"));
-            } else {
-              resolve();
-            }
-          }, 3e3);
-        });
-      },
-    },
-  },
+const { proxy } = getCurrentInstance();
+const info = () => {
+  proxy.$message.info("This is a normal message");
 };
 
-const handleValidateClick = (e) => {
-  e.preventDefault();
-  const messageReactive = message.loading("Verifying", {
-    duration: 0,
-  });
-  formRef.value?.validate((errors) => {
-    if (!errors) {
-      message.success("登录成功");
-    } else {
-      message.error("Invalid");
-      console.log("errors", errors);
-    }
-    messageReactive.destroy();
+const openNotification = () => {
+ proxy.$notification.open({
+    message: "Notification Title",
+    description:
+      "This is the content of the notification. This is the content of the notification. This is the content of the notification.",
+    onClick: () => {
+      console.log("Notification Clicked!");
+    },
   });
 };
 
