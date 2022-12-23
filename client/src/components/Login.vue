@@ -15,7 +15,7 @@ let account = ref("");
 const contactSocket = () => {
   if (window.WebSocket) {
     console.log("进来了");
-    const ws = new WebSocket("ws:127.0.0.1:8181");
+    const ws = new WebSocket("ws:127.0.0.1:8182");
     //简单起见 这个ws 存成全局
     globalThis.g_ws = ws;
     //路由定义
