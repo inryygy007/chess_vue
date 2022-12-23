@@ -9,6 +9,10 @@
     "serve": "vue-cli-service serve"
   },
   "dependencies": {
+    "@ant-design/icons-vue": "^6.1.0",
+    "ant-design-vue": "^3.3.0-beta.4",
+    "axios": "^1.2.1",
+    "bulma": "^0.9.4",
     "nodejs-websocket": "^1.7.2",
     "underscore": "^1.13.6",
     "vue": "^3.2.45",
@@ -16,6 +20,8 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
+    "sass": "^1.57.1",
+    "unplugin-vue-components": "^0.22.12",
     "vite": "^4.0.0"
   }
 }
