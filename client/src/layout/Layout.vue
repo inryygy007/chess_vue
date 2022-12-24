@@ -1,6 +1,5 @@
 <script setup>
-import { RouterView } from "vue-router";
-
+import { useRouter } from "vue-router";
 
 import * as fgui from "fairygui-dom";
 
@@ -19,9 +18,6 @@ async function start() {
 }
 console.log("start....")
 await start();
-
-import { RouterView, useRouter } from "vue-router";
-import { defineProps, ref, reactive, getCurrentInstance } from "vue";
 
 const router = useRouter();
 // 去登录页
