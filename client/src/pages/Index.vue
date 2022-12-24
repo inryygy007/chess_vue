@@ -4,7 +4,12 @@
     <div class="status" :class="methods.getShowCamp() > 0 ? 'red' : ''">
       {{ methods.getShowCamp() > 0 ? "红棋" : "黑棋" }}
     </div>
-    <button v-show="data.toPrepare" @click="methods.ready">准备</button>
+    
+    <div>
+      <button v-show="data.toPrepare" @click="methods.ready">准备</button>
+      <button v-show="data.leaveEnable" @click="methods.leave">离开</button>
+      <button v-show="data.surrenderEnable" @click="methods.surrender">投降</button>
+    </div>
     <!-- 棋盘 -->
     <div class="board">
       <div class="board-wrap">
@@ -71,6 +76,8 @@ const data = reactive({
   redPieces: [],
   needMovePiece: null,
   highLightPoint: [], // 可移动的点，需要高亮
+  leaveEnable: true,
+  surrenderEnable: false,
 });
 // 方法
 const methods = {
