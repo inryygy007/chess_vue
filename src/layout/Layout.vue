@@ -1,5 +1,16 @@
 <script setup>
-import { RouterView } from "vue-router";
+import { RouterView, useRouter } from "vue-router";
+import { defineProps, ref, reactive, getCurrentInstance } from "vue";
+
+const router = useRouter();
+// 去登录页
+const toLogin = () => {
+  router.push("login");
+};
+// 去注册页
+const toRegister = ()=>{
+
+}
 </script>
 <template>
   <div>
@@ -35,8 +46,8 @@ import { RouterView } from "vue-router";
             <div class="navbar-end">
               <div class="navbar-item">
                 <a-space>
-                  <a-button type="primary">Login</a-button>
-                  <a-button>Register</a-button>
+                  <a-button type="primary" @click="toLogin">Login</a-button>
+                  <a-button @click="toRegister">Register</a-button>
                 </a-space>
               </div>
             </div>
