@@ -1,5 +1,25 @@
 <script setup>
 import { RouterView } from "vue-router";
+
+
+import * as fgui from "fairygui-dom";
+
+async function start() {
+  await fgui.UIPackage.loadPackage("src/assets/uis/Login");
+
+  let view = fgui.UIPackage.createObject("Login", "LoginDialog");
+  view.makeFullScreen();
+  fgui.GRoot.inst.addChild(view);
+
+  let loginBtn = view.getChildByPath("loginBtn");
+  loginBtn.onClick(()=>{
+    console.log("onClick,,,");
+  })
+
+}
+console.log("start....")
+await start();
+
 </script>
 <template>
   <div>

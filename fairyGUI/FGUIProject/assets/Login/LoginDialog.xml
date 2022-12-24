@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="750,1331">
+  <displayList>
+    <image id="n1_rf0f" name="btn1" src="rf0f4" fileName="assets/pieces/-1/j.png" xy="492,378">
+      <relation target="" sidePair=""/>
+    </image>
+    <image id="n2_rf0f" name="n2" src="rf0f2" fileName="assets/logo.svg" xy="206,486"/>
+    <image id="n3_rf0f" name="n3" src="rf0fa" fileName="assets/pieces/1/k.png" xy="291,323"/>
+    <image id="n4_rf0f" name="n4" src="rf0fg" fileName="assets/pieces/1/p.png" xy="501,587"/>
+    <text id="n5_rf0f" name="n5" xy="469,701" size="124,42" fontSize="30" text="中国象棋"/>
+    <component id="n6_rf0f" name="loginBtn" src="rf0fh" fileName="LoginBtn.xml" xy="262,752">
+      <Button title="登录"/>
+    </component>
+  </displayList>
+</component>

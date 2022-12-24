@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="l4565lx9">
+  <resources>
+    <component id="mpfr0" name="LoginDialog.xml" path="/" exported="true"/>
+    <image id="rf0f1" name="board.png" path="/assets/"/>
+    <image id="rf0f2" name="logo.svg" path="/assets/" width="262" height="227"/>
+    <image id="rf0f3" name="k.png" path="/assets/pieces/-1/"/>
+    <image id="rf0f4" name="j.png" path="/assets/pieces/-1/"/>
+    <image id="rf0f5" name="z.png" path="/assets/pieces/-1/"/>
+    <image id="rf0f6" name="m.png" path="/assets/pieces/-1/"/>
+    <image id="rf0f7" name="x.png" path="/assets/pieces/-1/"/>
+    <image id="rf0f8" name="s.png" path="/assets/pieces/-1/"/>
+    <image id="rf0f9" name="p.png" path="/assets/pieces/-1/"/>
+    <image id="rf0fa" name="k.png" path="/assets/pieces/1/"/>
+    <image id="rf0fb" name="j.png" path="/assets/pieces/1/"/>
+    <image id="rf0fc" name="z.png" path="/assets/pieces/1/"/>
+    <image id="rf0fd" name="m.png" path="/assets/pieces/1/"/>
+    <image id="rf0fe" name="x.png" path="/assets/pieces/1/"/>
+    <image id="rf0ff" name="s.png" path="/assets/pieces/1/"/>
+    <image id="rf0fg" name="p.png" path="/assets/pieces/1/"/>
+    <component id="rf0fh" name="LoginBtn.xml" path="/"/>
+  </resources>
+  <publish name=""/>
+</packageDescription>

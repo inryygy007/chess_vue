@@ -13,6 +13,7 @@
     "ant-design-vue": "^3.3.0-beta.4",
     "axios": "^1.2.1",
     "bulma": "^0.9.4",
+    "fairygui-dom": "^0.9.9",
     "nodejs-websocket": "^1.7.2",
     "underscore": "^1.13.6",
     "vue": "^3.2.45",

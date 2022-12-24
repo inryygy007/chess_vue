@@ -44,11 +44,6 @@
   "resolved" "https://registry.npmmirror.com/@ctrl/tinycolor/-/tinycolor-3.5.0.tgz"
   "version" "3.5.0"
 
-"@esbuild/win32-x64@0.16.6":
-  "integrity" "sha512-BlXuMzOWhAcdLRzE/PQLAAyhItzvL1fRMvbmHV6k09Xiq8rZzFJB/CrfX3ZQI0nKBlfxO4sLN9H9WwK2nLo7Pg=="
-  "resolved" "https://registry.npmmirror.com/@esbuild/win32-x64/-/win32-x64-0.16.6.tgz"
-  "version" "0.16.6"
-
 "@jridgewell/sourcemap-codec@^1.4.13":
   "integrity" "sha512-XPSJHWmi394fuUuzDnGz1wiKqWfo1yXecHQMRf2l6hztTO+nPru658AyDngaBe7isIxEkRsPR3FZh+s7iVa4Uw=="
   "resolved" "https://registry.npmmirror.com/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.4.14.tgz"
@@ -97,10 +92,20 @@
   "resolved" "https://registry.npmmirror.com/@types/estree/-/estree-1.0.0.tgz"
   "version" "1.0.0"
 
+"@types/node@^14.0.1":
+  "integrity" "sha512-2ATO8pfhG1kDvw4Lc4C0GXIMSQFFJBCo/R1fSgTwmUlq5oy95LXyjDQinsRVgQY6gp6ghh3H91wk9ES5/5C+Tw=="
+  "resolved" "https://registry.npmmirror.com/@types/node/-/node-14.18.35.tgz"
+  "version" "14.18.35"
+
 "@types/node@>= 14":
   "integrity" "sha512-w+tIMs3rq2afQdsPJlODhoUEKzFP1ayaoyl1CcnwtIlsVe7K7bA1NGm4s3PraqTLlXnbIN84zuBlxBWo1u9BLw=="
   "resolved" "https://registry.npmmirror.com/@types/node/-/node-17.0.45.tgz"
   "version" "17.0.45"
+
+"@ungap/custom-elements@^1.0.0":
+  "integrity" "sha512-IQ8tbO+A1EdUCphlOtwF3TnpYL17bpXmwh+J6KFnuAzGPgjoL/twp6nkmTm80XREtgvfeO4s6/+z0AXQMrjcdw=="
+  "resolved" "https://registry.npmjs.org/@ungap/custom-elements/-/custom-elements-1.1.1.tgz"
+  "version" "1.1.1"
 
 "@vitejs/plugin-vue@^4.0.0":
   "integrity" "sha512-e0X4jErIxAB5oLtDqbHvHpJe/uWNkdpYV83AOG2xo2tEVSzCzewgJMtREZM30wXnM5ls90hxiOtAuVU6H5JgbA=="
@@ -388,6 +393,15 @@
   "resolved" "https://registry.npmmirror.com/estree-walker/-/estree-walker-2.0.2.tgz"
   "version" "2.0.2"
 
+"fairygui-dom@^0.9.9":
+  "integrity" "sha512-ZQFZ9u92fDxV1Ti46Jz2N5obWLLoX9xoWoqdXZNx0F8dvLbGowmVPdayWXApdqYMKppufKo3fviryfXaUo+gVg=="
+  "resolved" "https://registry.npmjs.org/fairygui-dom/-/fairygui-dom-0.9.9.tgz"
+  "version" "0.9.9"
+  dependencies:
+    "@types/node" "^14.0.1"
+    "@ungap/custom-elements" "^1.0.0"
+    "lodash" "^4.17.15"
+
 "fast-glob@^3.2.12":
   "integrity" "sha512-DVj4CQIYYow0BlaelwK1pHl5n5cRSJfM60UA0zK891sVInoPri2Ekj7+e1CT3/3qxXenpI+nBBmQAcJPJgaj4w=="
   "resolved" "https://registry.npmmirror.com/fast-glob/-/fast-glob-3.2.12.tgz"
@@ -426,6 +440,11 @@
     "asynckit" "^0.4.0"
     "combined-stream" "^1.0.8"
     "mime-types" "^2.1.12"
+
+"fsevents@~2.3.2":
+  "integrity" "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA=="
+  "resolved" "https://registry.npmmirror.com/fsevents/-/fsevents-2.3.2.tgz"
+  "version" "2.3.2"
 
 "function-bind@^1.1.1":
   "integrity" "sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A=="
@@ -502,7 +521,7 @@
   "resolved" "https://registry.npmmirror.com/lodash-es/-/lodash-es-4.17.21.tgz"
   "version" "4.17.21"
 
-"lodash@^4.17.21":
+"lodash@^4.17.15", "lodash@^4.17.21":
   "integrity" "sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg=="
   "resolved" "https://registry.npmmirror.com/lodash/-/lodash-4.17.21.tgz"
   "version" "4.17.21"
