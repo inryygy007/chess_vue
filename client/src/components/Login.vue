@@ -1,61 +1,3 @@
-<template>
-  <div class="container">
-    <a-form
-      :model="formState"
-      name="normal_login"
-      class="login-form"
-      @finish="onFinish"
-      @finishFailed="onFinishFailed"
-    >
-      <a-form-item
-        label="Username"
-        name="username"
-        :rules="[{ required: true, message: 'Please input your username!' }]"
-      >
-        <a-input v-model:value="formState.username">
-          <template #prefix>
-            <UserOutlined class="site-form-item-icon" />
-          </template>
-        </a-input>
-      </a-form-item>
-
-      <a-form-item
-        label="Password"
-        name="password"
-        :rules="[{ required: true, message: 'Please input your password!' }]"
-      >
-        <a-input-password v-model:value="formState.password">
-          <template #prefix>
-            <LockOutlined class="site-form-item-icon" />
-          </template>
-        </a-input-password>
-      </a-form-item>
-
-      <a-form-item>
-        <a-form-item name="remember" no-style>
-          <a-checkbox v-model:checked="formState.remember">记得我</a-checkbox>
-        </a-form-item>
-        <a class="login-form-forgot" href="">忘记了密码</a>
-      </a-form-item>
-
-      <a-form-item>
-        <a-button
-          :disabled="disabled"
-          type="primary"
-          html-type="submit"
-          class="login-form-button"
-        >
-          Log in
-        </a-button>
-      </a-form-item>
-    </a-form>
-  </div>
-
-  <!-- <div>
-    <input type="text" v-model="account" />
-    <button @click="login">登录</button>
-  </div> -->
-</template>
 <script setup>
 import { StepBackwardOutlined, UserOutlined, LockOutlined } from "@ant-design/icons-vue";
 import { defineProps, ref, reactive, getCurrentInstance, computed } from "vue";
@@ -148,16 +90,87 @@ const login = () => {
 };
 contactSocket();
 </script>
+<template>
+  <div class="login-parent">
+    <div class="login-child">
+      <a-form
+        :model="formState"
+        name="normal_login"
+        class="login-form"
+        @finish="onFinish"
+        @finishFailed="onFinishFailed"
+      >
+        <a-form-item
+          label="Username"
+          name="username"
+          :rules="[{ required: true, message: 'Please input your username!' }]"
+        >
+          <a-input v-model:value="formState.username">
+            <template #prefix>
+              <UserOutlined class="site-form-item-icon" />
+            </template>
+          </a-input>
+        </a-form-item>
+
+        <a-form-item
+          label="Password"
+          name="password"
+          :rules="[{ required: true, message: 'Please input your password!' }]"
+        >
+          <a-input-password v-model:value="formState.password">
+            <template #prefix>
+              <LockOutlined class="site-form-item-icon" />
+            </template>
+          </a-input-password>
+        </a-form-item>
+
+        <a-form-item>
+          <a-form-item name="remember" no-style>
+            <a-checkbox v-model:checked="formState.remember">记得我</a-checkbox>
+          </a-form-item>
+          <a class="login-form-forgot" href="">忘记了密码</a>
+        </a-form-item>
+
+        <a-form-item>
+          <a-button
+            :disabled="disabled"
+            type="primary"
+            html-type="submit"
+            class="login-form-button"
+          >
+            Log in
+          </a-button>
+        </a-form-item>
+      </a-form>
+    </div>
+  </div>
+
+  <!-- <div>
+    <input type="text" v-model="account" />
+    <button @click="login">登录</button>
+  </div> -->
+</template>
+
 <style lang="scss" scoped>
-@import "bulma/sass/utilities/_all.sass";
-@import "bulma/sass/elements/container.sass";
-.login-form {
-  max-width: 300px;
-}
-.login-form-forgot {
-  float: right;
-}
-.login-form-button {
-  width: 100%;
+.login-parent {
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+
+  .login-child {
+    max-width: 1280px;
+    margin: 0 auto;
+    text-align: center;
+    .login-form {
+      max-width: 300px;
+    }
+    .login-form-forgot {
+      float: right;
+    }
+    .login-form-button {
+      width: 100%;
+    }
+  }
 }
 </style>

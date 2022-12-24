@@ -1,7 +1,8 @@
 <script setup>
 import { useRouter } from "vue-router";
-
 import * as fgui from "fairygui-dom";
+
+const router = useRouter();
 
 async function start() {
   await fgui.UIPackage.loadPackage("src/assets/uis/Login");
@@ -11,25 +12,27 @@ async function start() {
   fgui.GRoot.inst.addChild(view);
 
   let loginBtn = view.getChildByPath("loginBtn");
-  loginBtn.onClick(()=>{
+  loginBtn.onClick(() => {
     console.log("onClick,,,");
-  })
-
+    console.log(router);
+    // router.push("login");
+    // toLogin()
+  });
 }
-console.log("start....")
-await start();
+console.log("start....");
+// await start();
 
-const router = useRouter();
 // 去登录页
 const toLogin = () => {
   router.push("login");
 };
 // 去注册页
-const toRegister = ()=>{
-
-}
+const toRegister = () => {};
 </script>
 <template>
+  <div>
+    <img src="../" alt="" />
+  </div>
   <div>
     <header class="header">
       <nav
