@@ -1,31 +1,90 @@
 <template>
-  <a-button type="primary">Primary Button</a-button>
-  <a-button>Default Button</a-button>
-  <a-button type="dashed">Dashed Button</a-button>
-  <a-button type="text">Text Button</a-button>
-  <a-button type="link">Link Button</a-button>
-  <a-button type="primary" @click="info">Display normal message</a-button>
-  <a-button type="primary" @click="openNotification">Open the notification box</a-button>
-  <step-backward-outlined />
+  <div class="container">
+    <a-form
+      :model="formState"
+      name="normal_login"
+      class="login-form"
+      @finish="onFinish"
+      @finishFailed="onFinishFailed"
+    >
+      <a-form-item
+        label="Username"
+        name="username"
+        :rules="[{ required: true, message: 'Please input your username!' }]"
+      >
+        <a-input v-model:value="formState.username">
+          <template #prefix>
+            <UserOutlined class="site-form-item-icon" />
+          </template>
+        </a-input>
+      </a-form-item>
+
+      <a-form-item
+        label="Password"
+        name="password"
+        :rules="[{ required: true, message: 'Please input your password!' }]"
+      >
+        <a-input-password v-model:value="formState.password">
+          <template #prefix>
+            <LockOutlined class="site-form-item-icon" />
+          </template>
+        </a-input-password>
+      </a-form-item>
+
+      <a-form-item>
+        <a-form-item name="remember" no-style>
+          <a-checkbox v-model:checked="formState.remember">记得我</a-checkbox>
+        </a-form-item>
+        <a class="login-form-forgot" href="">忘记了密码</a>
+      </a-form-item>
+
+      <a-form-item>
+        <a-button
+          :disabled="disabled"
+          type="primary"
+          html-type="submit"
+          class="login-form-button"
+        >
+          Log in
+        </a-button>
+      </a-form-item>
+    </a-form>
+  </div>
+
   <!-- <div>
     <input type="text" v-model="account" />
     <button @click="login">登录</button>
   </div> -->
 </template>
 <script setup>
-import {StepBackwardOutlined} from '@ant-design/icons-vue'
-import { defineProps, ref, reactive, getCurrentInstance } from "vue";
+import { StepBackwardOutlined, UserOutlined, LockOutlined } from "@ant-design/icons-vue";
+import { defineProps, ref, reactive, getCurrentInstance, computed } from "vue";
 import { useRouter } from "vue-router";
 // console.log(import.meta.env.VITE_BASIC_URL);
 const router = useRouter();
 // let account = ref("");
+const formState = reactive({
+  username: "",
+  password: "",
+  remember: true,
+});
+const onFinish = (values) => {
+  console.log("Success:", values);
+};
+const onFinishFailed = (errorInfo) => {
+  console.log("Failed:", errorInfo);
+};
+const disabled = computed(() => {
+  return !(formState.username && formState.password);
+});
+
 const { proxy } = getCurrentInstance();
 const info = () => {
   proxy.$message.info("This is a normal message");
 };
 
 const openNotification = () => {
- proxy.$notification.open({
+  proxy.$notification.open({
     message: "Notification Title",
     description:
       "This is the content of the notification. This is the content of the notification. This is the content of the notification.",
@@ -89,4 +148,16 @@ const login = () => {
 };
 contactSocket();
 </script>
-<style scoped></style>
+<style lang="scss" scoped>
+@import "bulma/sass/utilities/_all.sass";
+@import "bulma/sass/elements/container.sass";
+.login-form {
+  max-width: 300px;
+}
+.login-form-forgot {
+  float: right;
+}
+.login-form-button {
+  width: 100%;
+}
+</style>
