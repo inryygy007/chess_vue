@@ -38,6 +38,7 @@
 
 <script setup>
 import { reactive, ref } from "vue";
+import { findName } from "../api/userApi";
 const formRef = ref();
 
 const formState = reactive({
@@ -74,6 +75,9 @@ const rules = {
       validator: async (_rule, value) => {
         if (value === "") {
           return Promise.reject("请输入用户名");
+        } else {
+          let data = await findName();
+          console.log(data, "数据");
         }
       },
       trigger: "change",

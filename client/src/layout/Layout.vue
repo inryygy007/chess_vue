@@ -22,17 +22,8 @@ async function start() {
 console.log("start....");
 // await start();
 
-// 去登录页
-const toLogin = () => {
-  router.push("login");
-};
-// 去注册页
-const toRegister = () => {};
 </script>
 <template>
-  <div>
-    <img src="../" alt="" />
-  </div>
   <div>
     <header class="header">
       <nav
@@ -66,8 +57,12 @@ const toRegister = () => {};
             <div class="navbar-end">
               <div class="navbar-item">
                 <a-space>
-                  <a-button type="primary" @click="toLogin">Login</a-button>
-                  <a-button @click="toRegister">Register</a-button>
+                  <router-link :to="{ name: 'login' }">
+                    <a-button type="primary">Login</a-button>
+                  </router-link>
+                  <router-link :to="{ name: 'register' }">
+                    <a-button>Register</a-button>
+                  </router-link>
                 </a-space>
               </div>
             </div>
@@ -76,21 +71,21 @@ const toRegister = () => {};
       </nav>
     </header>
     <div class="container">
-      <video class="container" width="800" height="800" controls autoplay>
+      <video class="container" width="600" height="600" controls autoplay>
         <source
-          src=" https://www.runoob.com/try/demo_source/movie.ogg"
+          src="../assets/video/3922c3c6a1a4e140bc1447b35ede3da5.mp4"
           type="video/ogg"
         />
         <source
-          src=" https://www.runoob.com/try/demo_source/movie.ogg"
+          src="../assets/video/3922c3c6a1a4e140bc1447b35ede3da5.mp4"
           type="video/mp4"
         />
         <source
-          src=" https://www.runoob.com/try/demo_source/movie.ogg"
+          src="../assets/video/3922c3c6a1a4e140bc1447b35ede3da5.mp4"
           type="video/webm"
         />
         <object
-          data=" https://www.runoob.com/try/demo_source/movie.ogg"
+          data="../assets/video/3922c3c6a1a4e140bc1447b35ede3da5.mp4"
           width="320"
           height="240"
         >
@@ -98,11 +93,11 @@ const toRegister = () => {};
         </object>
       </video>
     </div>
-    <footer class="">底部
+    <footer class="">
+      底部
       <!-- <RouterView /> -->
     </footer>
   </div>
-  
 </template>
 
 <style lang="scss" scoped>

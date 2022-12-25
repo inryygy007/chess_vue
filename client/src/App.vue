@@ -1,6 +1,5 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
-import LayoutVue from "./layout/Layout.vue";
 const resize = () => {
   let cWidth = document.body.clientWidth;
   let width = (cWidth / 750) * 100;
@@ -17,7 +16,6 @@ const resize = () => {
 
 <template>
   <RouterView />
-  <!-- <LayoutVue /> -->
 </template>
 
 <style scoped></style>
