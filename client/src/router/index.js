@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Login from "../components/Login.vue";
+import Login from "../views/Login.vue";
 import HomeView from "../views/HomeView.vue";
 import TheHall from "../components/TheHall.vue";
 const router = createRouter({
@@ -9,7 +9,6 @@ const router = createRouter({
       path: "/",
       name: "layout",
       component: () => import("../layout/Layout.vue"),
-      // component: HomeView,
       redirect: "/home",
       children: [
         {
@@ -23,6 +22,11 @@ const router = createRouter({
       path: "/login",
       name: "login",
       component: Login,
+    },
+    {
+      path: "/register",
+      name: "register",
+      component: () => import("../views/Register.vue"),
     },
     {
       path: "/theHall",

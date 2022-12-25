@@ -98,9 +98,11 @@ const toRegister = () => {};
         </object>
       </video>
     </div>
-    <footer class="">底部</footer>
+    <footer class="">底部
+      <!-- <RouterView /> -->
+    </footer>
   </div>
-  <!-- <RouterView /> -->
+  
 </template>
 
 <style lang="scss" scoped>

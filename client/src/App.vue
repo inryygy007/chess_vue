@@ -11,8 +11,8 @@ const resize = () => {
   }
   document.querySelector("html").style.fontSize = width + "px";
 };
-resize();
-document.body.onresize = resize;
+// resize();
+// document.body.onresize = resize;
 </script>
 
 <template>
